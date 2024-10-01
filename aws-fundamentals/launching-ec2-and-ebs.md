@@ -1,10 +1,16 @@
 ## Launch EC2 instance
 1. Create a security group
-aws ec2 create-security-group --group-name EC2-EBS-Lab --description "Temporary SG for the EC2 and EBS Lab"
+aws ec2 create-security-group --group-name EC2-EBS-Lab --vpc-id vpc-083afff6af325ccd4 --description "Temporary SG for the EC2 and EBS Lab"
 2. Add a rule for SSH inbound to the security group
-aws ec2 authorize-security-group-ingress --group-name EC2-EBS-Lab --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-0204723d5f67452ba --protocol tcp --port 22 --cidr 0.0.0.0/0
 3. Launch instance in US-EAST-1A
-aws ec2 run-instances --image-id ami-0dfcb1ef8550277af --instance-type t2.micro --placement AvailabilityZone=us-east-1a --security-group-ids sg-xxxxxxxxxxxxxx
+aws ec2 run-instances \
+    --image-id ami-0ebfd941bbafe70c6 \
+    --instance-type t2.micro \
+    --subnet-id subnet-028aeb0f9a3a8c426 \
+    --security-group-ids sg-0204723d5f67452ba \
+    --associate-public-ip-address \
+    --key-name ll
 
 ## Create and Attach an EBS Volume
 1. Create a 10GB gp2 volume in us-east-1a with a name tag of 'test-volume-1'
