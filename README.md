@@ -25,3 +25,4 @@ This course covers all of the following topics that are included in the AWS Cert
 - AWS Config, AWS Service Catalog, AWS Trusted Advisor, AWS IAM, Amazon Inspector, AWS KMS, AWS CloudHSM, AWS WAF & Shield, AWS Artifact, and AWS Directory Services
 
 Learn more and [enroll in this course](https://digitalcloud.training/aws-certified-sysops-administrator-associate/) now to earn your AWS Certified SysOps Administrator Associate certification
+*** Isso é tudo pessoal
