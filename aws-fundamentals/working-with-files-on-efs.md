@@ -13,7 +13,7 @@ aws ec2 run-instances --image-id ami-0dfcb1ef8550277af --instance-type t2.micro 
 aws ec2 run-instances --image-id ami-0dfcb1ef8550277af --instance-type t2.micro --placement AvailabilityZone=us-east-1b --security-group-ids sg-xxxxxxxxxxxxxx
 
 ## Create an EFS File System
-1. Create an EFS file system (console, and add the EFS-Lab security group to the mount targets for each AZ
+1. Create an EFS file system (console, and add the EFS-Lab security group to the mount targets for each AZ)
 
 ## Mount using the NFS Client (perform steps on both instances)
 1. Create an EFS mount point

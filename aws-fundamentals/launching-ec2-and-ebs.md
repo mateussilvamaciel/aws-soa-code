@@ -14,6 +14,11 @@ aws ec2 run-instances \
 
 ## Create and Attach an EBS Volume
 1. Create a 10GB gp2 volume in us-east-1a with a name tag of 'test-volume-1'
+aws ec2 create-volume \
+    --volume-type gp2 \
+    --size 10 \
+    --availability-zone us-east-1a \
+    --tag-specifications 'ResourceType=volume,Tags=[{Key=Name,Value=teste-volume-1}]'
 2. List non-loopback block devices on instance
 sudo lsblk -e7
 3. Attach the volume to the instance in us-east-1a
