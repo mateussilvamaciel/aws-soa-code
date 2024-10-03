@@ -2,15 +2,29 @@
 
 ## Launch EC2 instances
 1. Create a security group
-aws ec2 create-security-group --group-name EFS-Lab --description "Temporary SG for the EC2 and EBS Lab"
+aws ec2 create-security-group --group-name EFS-Lab --description "Temporary SG for the EC2 and EBS Lab" --vpc-id vpc-083afff6af325ccd4
 2. Add a rule for SSH inbound to the security group
-aws ec2 authorize-security-group-ingress --group-name EFS-Lab --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-034ef036fbb4e206c --protocol tcp --port 22 --cidr 0.0.0.0/0
 3. Add rule to the security group to allow the NFS protocol from group members
-aws ec2 authorize-security-group-ingress --group-id sg-xxxxxxxxxxxxxxxxx --protocol tcp --port 2049 --source-group sg-xxxxxxxxxxxxxxxxx
+aws ec2 authorize-security-group-ingress --group-id sg-034ef036fbb4e206c --protocol tcp --port 2049 --source-group sg-034ef036fbb4e206c
 4. Launch instance in US-EAST-1A
-aws ec2 run-instances --image-id ami-0dfcb1ef8550277af --instance-type t2.micro --placement AvailabilityZone=us-east-1a --security-group-ids sg-xxxxxxxxxxxxxx
+aws ec2 run-instances \
+    --image-id ami-0ebfd941bbafe70c6 \
+    --instance-type t2.micro \
+    --placement AvailabilityZone=us-east-1a \
+    --subnet-id subnet-028aeb0f9a3a8c426 \
+    --security-group-ids sg-034ef036fbb4e206c \
+    --associate-public-ip-address \
+    --key-name ll
 5. Launch instance in US-EAST-1B
-aws ec2 run-instances --image-id ami-0dfcb1ef8550277af --instance-type t2.micro --placement AvailabilityZone=us-east-1b --security-group-ids sg-xxxxxxxxxxxxxx
+aws ec2 run-instances \
+    --image-id ami-0ebfd941bbafe70c6 \
+    --instance-type t2.micro \
+    --placement AvailabilityZone=us-east-1b \
+    --subnet-id subnet-091edb077c392e60f \
+    --security-group-ids sg-034ef036fbb4e206c \
+    --associate-public-ip-address \
+    --key-name ll
 
 ## Create an EFS File System
 1. Create an EFS file system (console, and add the EFS-Lab security group to the mount targets for each AZ)
