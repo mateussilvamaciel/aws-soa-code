@@ -35,15 +35,19 @@ mkdir ~/efs-mount-point
 2. Install NFS client
 sudo yum -y install nfs-utils
 3. Mount using the EFS client
-sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-023adf2979936b0be.efs.us-east-1.amazonaws.com:/ ~/efs-mount-point
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 10.0.1.176:/ efs
+
 4. Create a file on the file system
 5. Add a file system policy to enforce encryption in-transit
 6. Unmount (make sure to change directory out of efs-mount-point first)
 sudo umount ~/efs-mount-point
-4. Mount again using the EFS client (what happens?)
 
 ## Mount using the EFS utils (perform steps on both instances)
 1. Install EFS utils
-sudo yum install -y amazon-efs-utils
+sudo dnf install amazon-efs-utils
+Sem esse pacote da o erro
+mount: /efs: unknown filesystem type 'efs'.
 2. Mount using the EFS mount helper
-sudo mount -t efs -o tls fs-023adf2979936b0be.efs.us-east-1.amazonaws.com:/ ~/efs-mount-point
+sudo mount -t efs -o tls,mounttargetip=10.0.1.176 fs-0a4a5690a68f7231c efs/
+sudo mount -t efs -o tls,mounttargetip=10.0.2.46 fs-0a4a5690a68f7231c efs/
+
