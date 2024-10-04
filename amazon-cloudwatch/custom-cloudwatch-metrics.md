@@ -6,7 +6,7 @@ aws iam create-policy --policy-name "CloudWatch-Put-Metric-Data" --policy-docume
 2. Create an IAM role that uses the policy document
 aws iam create-role --role-name "CloudWatch-Role" --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"ec2.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
 3. Attach the policy to the role (update policy ARN)
-aws iam attach-role-policy --role-name "CloudWatch-Role" --policy-arn "arn:aws:iam::821711655051:policy/CloudWatch-Put-Metric-Data"
+aws iam attach-role-policy --role-name "CloudWatch-Role" --policy-arn "arn:aws:iam::329113097809:policy/CloudWatch-Put-Metric-Data"
 4. Create an instance profile
 aws iam create-instance-profile --instance-profile-name "CloudWatch-Instance-Profile"
 5. Add the role to the instance profile
@@ -14,11 +14,20 @@ aws iam add-role-to-instance-profile --instance-profile-name "CloudWatch-Instanc
 
 ## Launch an EC2 instance
 1. Create a security group
-aws ec2 create-security-group --group-name CustomMetricLab --description "Temporary SG for the Custom Metric Lab"
+aws ec2 create-security-group --group-name CustomMetricLab --vpc-id vpc-083afff6af325ccd4 --description "Temporary SG for the Custom Metric Lab"
 2. Add a rule for SSH inbound to the security group
-aws ec2 authorize-security-group-ingress --group-name CustomMetricLab --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id sg-0e91d351e1e5f7a77 --protocol tcp --port 22 --cidr 0.0.0.0/0
 3. Launch instance in US-EAST-1A
 aws ec2 run-instances --image-id ami-0aa7d40eeae50c9a9 --instance-type t2.micro --placement AvailabilityZone=us-east-1a --security-group-ids sg-0c6f4290d647e7813 --iam-instance-profile Name="CloudWatch-Instance-Profile"
+aws ec2 run-instances \
+    --image-id ami-0fff1b9a61dec8a5f \
+    --instance-type t2.micro \
+    --placement AvailabilityZone=us-east-1a \
+    --subnet-id subnet-028aeb0f9a3a8c426 \
+    --security-group-ids sg-0e91d351e1e5f7a77 \
+    --associate-public-ip-address \
+    --iam-instance-profile Name="CloudWatch-Instance-Profile" \
+    --key-name ll
 
 # Run the remaining commands from the EC2 instance
 
