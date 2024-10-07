@@ -48,6 +48,10 @@ aws cloudwatch put-metric-data --region us-east-1 --namespace "Custom/Memory" --
 
 3. Make the script executable
 sudo chmod +x mem-usage.sh
+*************************************************************
+Instalação do crontab
+sudo dnf install cronie -y
+sudo systemctl start crond.service
 4. Add the script to crontab, first open crontab
 crontab -e
 5. Then, add the following line to execute the script every minute
